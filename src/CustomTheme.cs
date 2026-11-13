@@ -70,11 +70,17 @@ namespace CustomTheme
             if (applying) return;
             if (SystemInformation.HighContrast) { Restore(); return; }
             if (palette == null) return;
+
             applying = true;
             try
             {
                 Form[] forms = new Form[Application.OpenForms.Count];
-                Application.OpenForms.CopyTo(forms, 0);
+
+                for (int i = 0; i < forms.Length; ++i)
+                {
+                    forms[i] = Application.OpenForms[i];
+                }
+
                 foreach (Form form in forms) Apply(form);
             }
             finally { applying = false; }
